@@ -6,7 +6,7 @@
 <title>Examples</title>
 <meta name="description" content="">
 <meta name="keywords" content="">
-
+	
 </head>
 <body>
 	<h1>基础绑定</h1>
@@ -27,6 +27,32 @@
 	<div id="id-html">
 		<h2>html 绑定</h2>
 		<div data-bind="html: details"></div>
+	</div>
+
+	<div id="id-css">
+		<h2>css 绑定</h2>
+		<style type="text/css">
+			.profitWarning{
+				color:red;
+			}
+		</style>
+		<div data-bind="css: { profitWarning: currentProfit() < 0 }">
+		   css 绑定中的文本
+		</div>
+	</div>
+
+	<div id="id-style">
+		<h2>style绑定</h2>
+		<div data-bind="style: { color: currentProfit() < 0 ? 'red' : 'black' }">
+		   style 绑定的文本
+		</div>
+	</div>
+
+	<div id="id-attr">
+		<h2>attr 绑定</h2>
+		<a data-bind="attr: { href: url, title: details ,target : target }">
+		    attr 绑定的文本
+		</a>
 	</div>
 
 
