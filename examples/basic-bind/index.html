@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Examples</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+
+</head>
+<body>
+	<h1>基础绑定</h1>
+
+	
+	<div id="id-visible">
+		<h2>visible 绑定</h2>
+	    <div data-bind="visible: shouldShowMessage">
+		    当视图模型属性 "shouldShowMessage" 的值是true的时候，就能看到这段文字.
+		</div>
+	</div>
+
+	<div id="id-text">
+		<h2>text 绑定</h2>
+		今天的消息是: <span data-bind="text: myMessage"></span>
+	</div>
+
+	<div id="id-html">
+		<h2>html 绑定</h2>
+		<div data-bind="html: details"></div>
+	</div>
+
+
+</body>
+</html>
+<script type="text/javascript" src="../../src/lib/jquery.js"></script>
+<script type="text/javascript" src="../../src/lib/knockout.js"></script>
+<script type="text/javascript">
+	$(function(){
+		(function(){
+			var viewModel = {
+		        shouldShowMessage: ko.observable(true) 
+		    };
+		    //viewModel.shouldShowMessage(false); 
+		    ko.applyBindings(viewModel,$('#id-visible')[0]);
+		})();
+
+		(function(){
+			var viewModel = {
+		        myMessage: ko.observable() 
+		    };
+		    viewModel.myMessage("Hello, world!"); 
+		    ko.applyBindings(viewModel,$('#id-text')[0]);
+		})();
+
+		(function(){
+			var viewModel = {
+		        details: ko.observable() 
+		    };
+		    viewModel.details("<p>knockout中文站的地址是 <a href='http://knockoutcn.github.io' target='blank'>here</a>.</p>"); 
+		    ko.applyBindings(viewModel,$('#id-html')[0]);
+		})();
+		
+
+	})
+</script>
