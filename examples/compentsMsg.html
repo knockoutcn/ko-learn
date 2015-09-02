@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Examples</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+	
+</head>
+<body>
+	<ul data-bind="foreach: products">
+		<li class="product">
+			<strong data-bind="text: name"></strong>
+			<like-widget params="value: userRating"></like-widget>
+		</li>
+	</ul>
+	<ul data-bind="foreach: productsB">
+		<li class="product">
+			<strong data-bind="text: name"></strong>
+			<test-widget params="value: userRating"></test-widget>
+		</li>
+	</ul>
+
+</body>
+</html>
+<script type="text/javascript" src="../src/lib/jquery.js"></script>
+<script type="text/javascript" src="../src/lib/knockout.js"></script>
+<script type="text/javascript">
+	var model;
+	var msg = '';
+	ko.components.register('like-widget', {
+		viewModel: function(params) {
+			// Data: value is either null, 'like', or 'dislike'
+			this.chosenValue = params.value;
+
+			// Behaviors
+			this.like = function() {
+				this.chosenValue('like');
+				console.log('do something like')
+				a2bMsg();
+
+			}.bind(this);
+			this.dislike = function() { this.chosenValue('dislike'); }.bind(this);
+		},
+		template:
+				'<div class="like-or-dislike" data-bind="visible: !chosenValue()">\
+                    <button data-bind="click: like">Like it</button>\
+                    <button data-bind="click: dislike">Dislike it</button>\
+                </div>\
+                <div class="result" data-bind="visible: chosenValue">\
+                    You <strong data-bind="text: chosenValue"></strong> it\
+                </div>'
+	});
+	ko.components.register('test-widget', {
+		viewModel: function(params) {
+			// Data: value is either null, 'like', or 'dislike'
+			this.chosenValue = params.value;
+
+			// Behaviors
+			this.like = function() {
+				this.chosenValue('like');
+			}.bind(this);
+			this.dislike = function() { this.chosenValue('dislike'); }.bind(this);
+		},
+		template:
+				'<div class="like-or-dislike" data-bind="visible: !chosenValue()">\
+                    <button data-bind="click: like">Like it</button>\
+                    <button data-bind="click: dislike">Dislike it</button>\
+                </div>\
+                <div class="result" data-bind="visible: chosenValue">\
+                    You <strong data-bind="text: chosenValue"></strong> it\
+                </div>'
+	});
+
+	function Product(name, rating) {
+		this.name = name;
+		this.userRating = ko.observable(rating || null);
+	}
+
+	function MyViewModel() {
+		this.products = [
+			new Product('Garlic bread'),
+			new Product('Pain au chocolat'),
+			new Product('Seagull spaghetti', 'like') // This one was already 'liked'
+		];
+		this.productsB = [
+			new Product('Garlic bread B'),
+			new Product('Pain au chocolat B'),
+			new Product('Seagull spaghetti B', 'like') // This one was already 'liked'
+		];
+
+		this.fullName = ko.pureComputed(function() {
+			return this.firstName() ;
+		}, this);
+	}
+	model = new MyViewModel();
+	ko.applyBindings(model);
+
+	// A 改变 B
+	function a2bMsg(){
+		console.log(ko.components)
+	}
+	console.log(a)
+
+</script>
+
+
+
+

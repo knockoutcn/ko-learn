@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Examples</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+
+</head>
+<body>
+
+<input data-bind="hasFocus: isSelected" />
+<button data-bind="click: setIsSelected">Focus programmatically</button>
+<span data-bind="visible: isSelected">The textbox has focus</span>
+<hr>
+
+
+<ul data-bind="foreach: list">
+    <li>
+        Name at position <span data-bind="text: $index"> </span>:
+        <span data-bind="text: name"> </span>
+        <input data-bind="hasFocus: isSelected" />
+        <span data-bind="visible: isSelected">The textbox has focus</span>
+    </li>
+</ul>
+<hr>
+
+<ul id="ul2" data-bind="foreach: list2">
+    <li>
+        Name at position <span data-bind="text: $index" class="index"> </span>:
+        <span data-bind="text: name"> </span>
+        <input data-bind="hasFocus: isSelected" />
+        <span data-bind="visible: isSelected">The textbox has focus</span>
+    </li>
+</ul>
+
+
+</body>
+</html>
+<script type="text/javascript" src="../src/lib/jquery.js"></script>
+<script type="text/javascript" src="../src/lib/knockout.js"></script>
+<script type="text/javascript">
+
+    function viewModel(){
+        var self = this;
+        self.isSelected = ko.observable(false);
+        self.setIsSelected = function() { this.isSelected(true) };
+
+        self.list = ko.observableArray([
+            { name: 'Bert',isSelected:false },
+            { name: 'Charles',isSelected:false },
+            { name: 'Denise',isSelected:false }
+        ]);
+
+        self.list2 = ko.observableArray([
+            { name: 'Bert',isSelected:true },
+            { name: 'Charles',isSelected:false },
+            { name: 'Denise',isSelected:false }
+        ]);
+
+        self.isSelecteds = ko.observableArray([false,false,false])
+    }
+    var m = new viewModel();
+
+
+
+    ko.applyBindings(m,$('body')[0]);
+
+
+
+    $('#ul2').on('focus','input',function(e){
+        var index = $(e.target).siblings('.index').text();
+        var arr = m.list2();
+        arr  = changeFocus(arr,index);
+        m.list2([]);
+        m.list2(arr);
+    })
+    function changeFocus(arr,index){
+        $.each(arr,function(i,e){
+            if(i==index*1){
+                e.isSelected = true;
+            }
+            else{
+                e.isSelected = false;
+            }
+        })
+        return arr;
+    }
+
+
+</script>
+
+
+
+

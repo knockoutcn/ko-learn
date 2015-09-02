@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Examples</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+	
+</head>
+<body>
+	<input type="text" data-bind="value:form.userName" value="aaa" > 
+	<input type="password" data-bind="value:form.userPwd" value="bbb" > 
+	<button data-bind="click:submit()">submit</button>
+
+</body>
+</html>
+<script type="text/javascript" src="../src/lib/jquery.js"></script>
+<script type="text/javascript" src="../src/lib/knockout.js"></script>
+<script type="text/javascript">
+	
+function viewModel(){
+	var self = this;
+    self.form = {
+    	userName : ko.observable(''),
+    	userPwd : ko.observable('')
+    }
+    self.submit = function(){
+    	console.log(self.form.userName())
+    	console.log(self.form.userPwd())
+    }
+};
+var m = new viewModel();
+
+console.log(m.form.userName())
+    	console.log(m.form.userPwd())
+
+ko.applyBindings(m,$('body')[0]);
+
+
+</script>
+
+
+
+
